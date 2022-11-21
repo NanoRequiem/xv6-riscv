@@ -4,22 +4,30 @@
 #include "kernel/param.h"
 #include <stddef.h>
 
+//Struct to store page table and table values
+struct page {
+    int data; //Size of the data being stored
+    struct page *next;
+};
+
+struct page *header = NULL;
+struct page *current = NULL;
 
 //Create a linked list that acts as a page table and data
 //Linked list allocates pages and connects them to the pointer that begins that page
 void* _malloc(int size) {
-    void *allocated_mem;
 
-    if (size == 0) {
-        allocated_mem = 0;
+    if (size <= 0) {
+        return header;
     }
-    else {
-        char *memory = sbrk(size); //don't need this
-        allocated_mem = (void*)memory;
-    }
-    return allocated_mem;
+    
+    //We know that the size is greater than 0 so now we can move onto allocating memory
+
+
+    return current;
 }
 
+//search through linked list until NULL is seen
 void _free(void *ptr) {
 
 }
