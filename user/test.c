@@ -5,12 +5,16 @@
 int main(int argc, char *argv[]) {
     printf("-----STARTING TEST-----\n");
     
-    printf("Testing NULL: ");
-    int *bruh = _malloc(0);
+    int x = 10, y = 8;
 
-    if(bruh == 0) {
-        printf("passed \n");
-    }
+    printf("%d\n", x / y + (x % y !=0));
+
+    // printf("Testing NULL: ");
+    // int *bruh = _malloc(0);
+
+    // if(bruh == 0) {
+    //     printf("passed \n");
+    // }
 
     return 0;
 }
