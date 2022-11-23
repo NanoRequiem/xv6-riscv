@@ -18,6 +18,7 @@ struct page *zero_size = NULL;
 //Page size of 8 bytes 
 const int page_size = 8;
 
+//TO-DO: ADD A CHECK FOR ALLOCATION SIZE MAXIMUM
 //Create a linked list that acts as a page table and data
 //Linked list allocates pages and connects them to the pointer that begins that page
 void* _malloc(int size) {
