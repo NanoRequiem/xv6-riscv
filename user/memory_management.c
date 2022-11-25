@@ -1,7 +1,6 @@
-#include "memory_management.h"
+#include "user/memory_management.h"
 #include "kernel/types.h"
 #include "user/user.h"
-#include "kernel/param.h"
 #include <stddef.h>
 
 //Struct to store page table and table values
@@ -18,7 +17,6 @@ struct page *zero_size = NULL;
 //Page size of 8 bytes 
 const int page_size = 8;
 
-//TO-DO: ADD A CHECK FOR ALLOCATION SIZE MAXIMUM
 //Create a linked list that acts as a page table and data
 //Linked list allocates pages and connects them to the pointer that begins that page
 void* _malloc(int size) {
@@ -62,12 +60,14 @@ void* _malloc(int size) {
     int blocksLeft = needed;
     void *return_value = NULL;
     while(blocksLeft > 0) {
-        //sbrk(0) to allocate struct 
         //We know that the size is greater than 0 so now we can move onto allocating memory
-        struct page *newAllocate = sbrk(0);
+        //Use sbrk to allocate enough memory for meta data to be stored
+        struct page *newAllocate;
+        newAllocate = (struct page*)sbrk(sizeof(struct page));
 
         //Grow memeory by what we need and save pointer to page table
         newAllocate->data_ptr = sbrk(page_size);
+        printf("\nMemory allocated!\n");
         //Since we have allocated memory set allocation as true 
         newAllocate->allocation = 1;
         newAllocate->blocks = blocksLeft;
@@ -89,19 +89,17 @@ void* _malloc(int size) {
 //search through linked list until NULL is seen
 void _free(void *ptr) {
     struct page *search = header;
+    
     int endFreed = 0;
 
     while(search != NULL) {
         if(search->data_ptr == ptr) {
+            printf("\n\nfreed!\n\n");
             int blocks = search->blocks;
             while(blocks > 0) {
                 search->allocation = 0;
                 blocks = blocks - 1;
                 endFreed = endFreed + 1;
-            }
-
-            if(search->next ==  NULL) {
-                sbrk(-1 * endFreed * page_size);
             }
         }
 
