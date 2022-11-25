@@ -62,8 +62,9 @@ void* _malloc(int size) {
     int blocksLeft = needed;
     void *return_value = NULL;
     while(blocksLeft > 0) {
+        //sbrk(0) to allocate struct 
         //We know that the size is greater than 0 so now we can move onto allocating memory
-        struct page *newAllocate = (struct page *) malloc(sizeof(struct page));
+        struct page *newAllocate = sbrk(0);
 
         //Grow memeory by what we need and save pointer to page table
         newAllocate->data_ptr = sbrk(page_size);
