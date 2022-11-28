@@ -67,7 +67,6 @@ void* _malloc(int size) {
 
         //Grow memeory by what we need and save pointer to page table
         newAllocate->data_ptr = sbrk(page_size);
-        printf("\nMemory allocated!\n");
         //Since we have allocated memory set allocation as true 
         newAllocate->allocation = 1;
         newAllocate->blocks = blocksLeft;
@@ -94,7 +93,6 @@ void _free(void *ptr) {
 
     while(search != NULL) {
         if(search->data_ptr == ptr) {
-            printf("\n\nfreed!\n\n");
             int blocks = search->blocks;
             while(blocks > 0) {
                 search->allocation = 0;
