@@ -1,3 +1,6 @@
+// Code file for memory management
+// 
+// Brooklyn McSwiney - ed20b3m
 #include "user/memory_management.h"
 #include "kernel/types.h"
 #include "user/user.h"
@@ -87,11 +90,14 @@ void* _malloc(int size) {
 
 //search through linked list until NULL is seen
 void _free(void *ptr) {
-    struct page *search = header;
+    struct page *search = header; //Get the header file so we can start searching
     
-    int endFreed = 0;
+    int endFreed = 0; //Integer to check how many blocks we have freed
 
+    //Search through whole list until we find the correct memory block
     while(search != NULL) {
+
+        //Once we find the correct block mark every block in it's chain as unallocated
         if(search->data_ptr == ptr) {
             int blocks = search->blocks;
             while(blocks > 0) {
